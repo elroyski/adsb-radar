@@ -1,0 +1,10 @@
+{
+  "name": "adsb-radar-sim",
+  "version": "1.0.0",
+  "description": "Symulacja okraglego radaru samolotow (dane z adsb.fi)",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

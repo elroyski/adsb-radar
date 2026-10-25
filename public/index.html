@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ADSB Radar Sim</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>ADSB Radar</h1>
+    <div class="status">
+      <span id="statusText">laczenie...</span>
+      <button id="settingsBtn" aria-label="Ustawienia">&#9881;</button>
+    </div>
+  </header>
+
+  <main class="radar-wrap">
+    <canvas id="radar" width="700" height="700"></canvas>
+    <div id="tooltip" class="tooltip hidden"></div>
+    <div id="zoomBadge" class="zoom-badge hidden"></div>
+  </main>
+
+  <div class="legend">
+    <span class="legend-item"><i class="dot dot-low"></i> &lt; 5000 ft / ziemia</span>
+    <span class="legend-item"><i class="dot dot-mid"></i> 5000&ndash;20000 ft</span>
+    <span class="legend-item"><i class="dot dot-high"></i> &gt; 20000 ft</span>
+    <span class="legend-item">&#9651; samolot &middot; &#9671; dron/UAV &middot; &#9711; balon/szybowiec &middot; &#9723; pojazd naziemny &middot; &#10133; smiglowiec</span>
+  </div>
+
+  <div id="statsBar" class="stats-bar"></div>
+
+  <section class="table-wrap">
+    <input id="tableFilter" type="text" placeholder="Szukaj: lot, typ, squawk..." class="table-filter" />
+    <table id="aircraftTable">
+      <thead>
+        <tr>
+          <th>Lot</th>
+          <th>Typ</th>
+          <th>Alt (ft)</th>
+          <th>V/S</th>
+          <th>Pred (kt)</th>
+          <th>Kurs</th>
+          <th>Odl (NM)</th>
+          <th>Squawk</th>
+        </tr>
+      </thead>
+      <tbody id="aircraftTableBody"></tbody>
+    </table>
+  </section>
+
+  <footer class="footer">
+    Dane: <a href="https://adsb.fi" target="_blank" rel="noopener">adsb.fi</a> &middot;
+    Mapa: Esri, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> &middot;
+    <span id="centerInfo"></span>
+  </footer>
+
+  <div id="detailModal" class="detail-overlay hidden">
+    <div class="detail-card">
+      <button id="detailClose" class="detail-close" aria-label="Zamknij">&times;</button>
+      <div id="detailPhotoWrap" class="detail-photo-wrap"></div>
+      <h2 id="detailTitle"></h2>
+      <p id="detailSubtitle" class="detail-sub"></p>
+      <p id="detailRoute" class="detail-route"></p>
+      <div id="detailGrid" class="detail-grid"></div>
+      <p id="detailLinks" class="detail-links"></p>
+      <p id="detailPhotoCredit" class="detail-credit"></p>
+    </div>
+  </div>
+
+  <div id="settingsPanel" class="settings hidden">
+    <h2>Ustawienia</h2>
+    <label>
+      Szerokosc geo. (lat)
+      <input type="number" id="latInput" step="0.0001" />
+    </label>
+    <label>
+      Dlugosc geo. (lon)
+      <input type="number" id="lonInput" step="0.0001" />
+    </label>
+    <label>
+      Promien: <span id="radiusValue"></span> NM (&#8776; <span id="radiusKm"></span> km)
+      <input type="range" id="radiusInput" min="5" max="250" step="5" />
+    </label>
+    <div class="settings-actions">
+      <button id="locateBtn">Wykryj automatycznie (IP)</button>
+      <button id="saveBtn" class="primary">Zapisz</button>
+      <button id="closeBtn">Zamknij</button>
+    </div>
+    <p id="settingsMsg" class="msg"></p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
